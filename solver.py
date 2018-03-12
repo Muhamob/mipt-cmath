@@ -28,14 +28,6 @@ class Nodes():
 			self.states = [0]*(int(depth)-1) + [self.f.copy()]
 
 	def correlate(self, kernel):
-		"""
-			mode:
-				-> valid :  uses when there are border conditions
-							return (shape[0]-kernel.shape[0]//2, shape[1]-kernel.shape[1]//2)
-				-> same  :  uses when bording conditions are neglected
-							return same shape array
-			kernel: 
-		"""
 		self.f = correlate2d(self.f, kernel, mode='same')
 		if self.depth != 1:
 			self.states.pop(0)
