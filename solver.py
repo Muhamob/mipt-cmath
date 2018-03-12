@@ -68,10 +68,8 @@ class Solver():
 	def setBorderCond(self, boundary_mask, c=-999999999999):
 		"""
 			mask	: numpy.ndarray like self.phi.f where mask[i,j]=boundaryCond if
-					  there is a border else -999999999999
-					  NOTE !!! boundary conditions should not be equal to 0. If it so,
-					  then add some constant and finally substract this constant
-			c 		: constant to recognize borders
+				  there is a border else -999999999999
+			c 	: constant to recognize borders
 		"""
 		if self.phi.f.shape != boundary_mask.shape:
 			raise Exception('shapes aren\'t matching')
@@ -116,6 +114,9 @@ class Solver():
 		return self.phi
 
 	def diff(self):
+		"""
+			phix and phiy are numpy 2d arrays
+		"""
 		phix = correlate1d(self.phi.f, np.array([-0.5, 0, 0.5])/self.phi.hx, mode='constant', cval=0., axis=1)
 		phiy = correlate1d(self.phi.f, np.array([-0.5, 0, 0.5])/self.phi.hy, mode='constant', cval=0., axis=0)
 		phix[:, 0] = (self.phi.f[:, 1] - self.phi.f[:, 0])/self.phi.hx
